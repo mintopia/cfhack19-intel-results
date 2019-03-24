@@ -20,6 +20,8 @@ COPY --chown=1000:1000 --from=composer:latest /usr/bin/composer /usr/bin/compose
 COPY --chown=1000:1000 ./src/composer.json /app/
 COPY --chown=1000:1000 ./src/composer.lock /app/
 
+ENV HOME=/tmp
+
 RUN composer install --no-dev --no-autoloader --no-progress
 
 COPY --chown=1000:1000 ./src/ /app/
