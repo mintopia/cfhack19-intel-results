@@ -1,4 +1,4 @@
-FROM php:7.3-apache
+FROM php:7.3-fpm
 MAINTAINER Jessica Smith <jess@mintopia.net>
 
 RUN apt-get update \
