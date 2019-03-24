@@ -18,7 +18,6 @@ class PingResource extends JsonResource
         return [
             'version' => 1,
             'timestamp' => Carbon::now()->toIso8601String(),
-            'build_date' => (new Carbon(filemtime(__DIR__ . '../../../../../../.env')))->toIso8601String(),
         ];
     }
 }

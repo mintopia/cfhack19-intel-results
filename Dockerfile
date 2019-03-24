@@ -10,7 +10,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /app /tmp \
     && sed -ri -e 's!/var/www/html!/app/public!g' /etc/apache2/sites-available/*.conf \
-	&& sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+	&& sed -ri -e 's!/var/www/!/app/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf \
+	&& a2enmod rewrite
 
 WORKDIR /app/
 
@@ -18,6 +19,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 COPY ./src/composer.json /app/
 COPY ./src/composer.lock /app/
+COPY ./dotenv /app/.env
 
 ENV HOME=/tmp
 
