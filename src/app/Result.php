@@ -45,7 +45,6 @@ class Result extends Model
 
     public function process()
     {
-        $this->publishToWebsocket();
         $this->responseToOisp();
     }
 
@@ -57,10 +56,5 @@ class Result extends Model
     protected function respondToOisp()
     {
         Log::notice('Would send response to OISP');
-    }
-
-    protected function publishToWebsocket()
-    {
-        Log::notice('Would send to WebSocket');
     }
 }
