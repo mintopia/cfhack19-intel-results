@@ -1,4 +1,4 @@
-# Cloudfest Hackathon 2019 - Intel Machine Learning - Results Interface
+# Cloudfest Hackathon 2019 - Intel Machine Learning - UI
 
 ## About
 
@@ -22,7 +22,7 @@ The application is deployed to a Kubernetes cluster. Setting up redis, minio and
 
 ## Credits
 
-This application was developed at the CloudFest 2019 Hackaton by [Jessica Smith](https://github.com/mintopia)
+This application was developed at the CloudFest 2019 Hackathon by [Jessica Smith](https://github.com/mintopia)
 
 ## License
 
