@@ -1,0 +1,139 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: cfhack19-results
+  name: cfhack19-websocket
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: cfhack19-results
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        deployment/revision: "1"
+      creationTimestamp: null
+      labels:
+        app: cfhack19-results
+        service: cfhack19-results-websocket
+      name: cfhack19-results-websocket
+    spec:
+      containers:
+      - args:
+        - artisan
+        - websocket:serve
+        - --verbose
+        command:
+        - php
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: DB_PASSWORD
+              name: cfhack19-results-secrets
+        - name: APP_KEY
+          valueFrom:
+            secretKeyRef:
+              key: APP_KEY
+              name: cfhack19-results-secrets
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: REDIS_PASSWORD
+              name: cfhack19-results-secrets
+        - name: MINIO_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              key: MINIO_SECRET_KEY
+              name: cfhack19-results-secrets
+        - name: PUSHER_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: PUSHER_APP_SECRET
+              name: cfhack19-results-secrets
+        - name: APP_URL
+          valueFrom:
+            configMapKeyRef:
+              key: APP_URL
+              name: cfhack19-results-config
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: DB_HOST
+              name: cfhack19-results-config
+        - name: DB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: DB_USERNAME
+              name: cfhack19-results-config
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: DB_DATABASE
+              name: cfhack19-results-config
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_HOST
+              name: cfhack19-results-config
+        - name: MINIO_ACCESS_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: MINIO_ACCESS_KEY
+              name: cfhack19-results-config
+        - name: MINIO_ENDPOINT
+          valueFrom:
+            configMapKeyRef:
+              key: MINIO_ENDPOINT
+              name: cfhack19-results-config
+        - name: PUSHER_APP_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: PUSHER_APP_KEY
+              name: cfhack19-results-config
+        - name: PUBLIC_PUSHER_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: PUBLIC_PUSHER_HOST
+              name: cfhack19-results-config
+        - name: PUBLIC_PUSHER_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: PUBLIC_PUSHER_PORT
+              name: cfhack19-results-config
+        - name: PUSHER_APP_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: PUSHER_APP_HOST
+              name: cfhack19-results-config
+        - name: MINIO_BASE_URI
+          valueFrom:
+            configMapKeyRef:
+              key: MINIO_BASE_URI
+              name: cfhack19-results-config
+        image: mintopia/cfhack19-intel-results:latest
+        imagePullPolicy: Always
+        name: cfhack19-results-websocket
+        ports:
+        - containerPort: 6001
+          name: service
+          protocol: TCP
+        resources:
+          requests:
+            cpu: "1"
+            memory: 256Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

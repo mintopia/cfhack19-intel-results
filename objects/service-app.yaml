@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    getambassador.io/config: |-
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name: cfhack19-app
+      prefix: /
+      host: results.example.com
+      service: cfhack19-app.default.svc.cluster.local
+  creationTimestamp: 2019-03-24T16:44:55Z
+  labels:
+    app: cfhack19-results
+  name: cfhack19-app
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    service: cfhack19-results-app
+  sessionAffinity: None
+  type: ClusterIP

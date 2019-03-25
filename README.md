@@ -1,2 +1,3 @@
-# cfhack19-intel-results
-Results Interface/UI/Processing Engine for CF Hack 19
+# Cloudfest Hackathon 2019 - Intel Machine Learning - Results Interface
+
+

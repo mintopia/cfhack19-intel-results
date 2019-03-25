@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    getambassador.io/config: |-
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name: cfhack19-websocket
+      prefix: /
+      host: ws-results.example.com
+      service: cfhack19-websocket.default.svc.cluster.local:6001
+      use_websocket: true
+  creationTimestamp: 2019-03-24T17:20:51Z
+  labels:
+    app: cfhack19-results
+  name: cfhack19-websocket
+spec:
+  ports:
+  - port: 6001
+    protocol: TCP
+    targetPort: 6001
+  selector:
+    service: cfhack19-results-websocket
+  sessionAffinity: None
+  type: ClusterIP
