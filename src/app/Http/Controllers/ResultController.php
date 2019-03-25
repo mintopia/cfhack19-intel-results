@@ -17,7 +17,7 @@ class ResultController extends Controller
 
         // TODO: Filtering
 
-        $page = $query->paginate($params['per_page'])->appends($params)->setPath(route('api.v1.results.index'));
+        $page = $query->paginate($params['per_page'])->appends($params)->setPath(route('results.index'));
         return view('results.index', [
             'results' => $page
         ]);
