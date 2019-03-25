@@ -6,7 +6,8 @@ use App\Http\Resources\Api\Version1\ResultResource;
 use App\Result;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Ramsey\Uuid;
+use Ramsey\Uuid\Uuid;
+use Storage;
 
 class ResultController extends Controller
 {
@@ -26,15 +27,20 @@ class ResultController extends Controller
     public function store(Request $request)
     {
         $result = new Result;
-        $result->data = $request->input('data');
+        $data = (object) $request->input('data');
+        $image = null;
+        if (property_exists($data, 'image')) {
+            $image = $data->image;
+            unset($data->image);
+        }
+        $result->data = $data;
         if (property_exists($result->data, 'image_url')) {
             $result->image_url = $result->data->image_url;
         }
-        if (property_exists($result->data, 'image')) {
-            $img = str_replace('data:image/jpeg;base64,', '', $result->data->image);
+        if ($image) {
+            $img = str_replace('data:image/jpeg;base64,', '', $image);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
-            unset($result->data->image);
 
             $filename = Uuid::uuid4()->toString() . '.jpg';
             $drive = Storage::drive();
