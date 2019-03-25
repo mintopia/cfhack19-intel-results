@@ -26,6 +26,9 @@ class ResultController extends Controller
     {
         $result = new Result;
         $result->data = $request->input('data');
+        if (property_exists($result->data, 'image_url')) {
+            $result->image_url = $result->data->image_url;
+        }
         $result->save();
         return ResultResource::make($result)->response()->setStatusCode(201);
     }

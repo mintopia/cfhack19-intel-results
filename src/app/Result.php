@@ -35,6 +35,14 @@ class Result extends Model
         'data' => 'object'
     ];
 
+    public function getEmotion()
+    {
+        if (property_exists($this->data, 'emotion')) {
+            return $this->data->emotion;
+        }
+        return null;
+    }
+
     public function process()
     {
         $this->publishToWebsocket();

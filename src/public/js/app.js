@@ -41,5 +41,22 @@ var App = {
     updateFromJSON: function(json)
     {
         console.log(json);
+        let emotion = 'Unknown';
+        let date = moment(json.data.created_at).format('YYYY-MMM-DD HH:mm:ss');
+        if (json.data.emotion) {
+            emotion = json.data.emotion
+        }
+        let html = '<div class="text-center">';
+        html += '<h1 class="mt-1 mb-5">' + emotion + '</h1>';
+        html += '<img src="' + json.image_url + '" class="rounded-sm"/>';
+        html += '</div>';
+        html += '<h3 class="mt-5">Data</h3>';
+        html += '<table class="table table-striped">';
+        html += '<thead class="thead-dark"><tr><th scope="col">ID</th><th scope="col">Emotion</th><th scope="col">Date</th></tr></thead>';
+        html += '<tbody><tr><td>';
+        html += '<a href="/results/' + json.id + '">' + json.id + '</a>';
+        html += '</td><td>' + emotion + '</td><td>' + date + '</td></tr></tbody></table>';
+
+        jQuery('#results').html(html);
     }
 };

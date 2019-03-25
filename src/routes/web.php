@@ -12,3 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/about', 'HomeController@about')->name('about');
+Route::resource('results', 'ResultController')->only([
+    'index', 'show'
+]);
